@@ -1,40 +1,40 @@
 //* Selecting Elements
 
-const title = document.getElementById('title');
-const author = document.getElementById('author');
-const year = document.getElementById('year');
-const btn = document.querySelector('.btn');
-const bookList = document.getElementById('book-list');
+const titleInp = document.getElementById("title");
+const authorInp = document.getElementById("author");
+const yearInp = document.getElementById("year");
+const btn = document.querySelector(".btn");
+const bookList = document.getElementById("book-list");
 
 //* Creating Event Listener
 
-btn.addEventListener('click', (e) => {
-    e.preventDefault();
+btn.addEventListener("click", function (e) {
+  e.preventDefault();
 
-    //* Creating Basic Validation
+  //* Handling Errors
+  if (titleInp.value === "" || authorInp.value === "" || yearInp.value === "") {
+    alert("Please fill the remaining details");
+  } else {
+    //* Creating New Row Table Headings % Delete Button
+    let newRow = document.createElement("tr");
+    let newTitle = document.createElement("th");
+    let newAuthor = document.createElement("th");
+    let newYear = document.createElement("th");
+    let deleteBtn = document.createElement("span");
+    //* Setting Values For New Row Table Headings % Delete Button
+    deleteBtn.innerHTML = "\u00d7";
+    newTitle.innerHTML = titleInp.value;
+    newAuthor.innerHTML = authorInp.value;
+    newYear.innerHTML = yearInp.value;
+    //* Appending Them To Container
+    newRow.append(newTitle, newAuthor, newYear, deleteBtn);
+    bookList.append(newRow);
 
-    if (title.value == '' && author.value == '' && year.value == '') {
-        alert('Please Enter Value')
-    } else {
-        //* Creating New Row
-        const NewRow = document.createElement('tr');
-
-        //* Creating New Title    
-        const newTitle = document.createElement('th');
-        newTitle.innerHTML = title.value;
-        NewRow.appendChild(newTitle);
-
-        //* Creating New Author    
-        const newAuthor = document.createElement('th');
-        newAuthor.innerHTML = author.value;
-        NewRow.appendChild(newAuthor);
-
-        //* Creating New Year    
-        const newYear = document.createElement('th');
-        newYear.innerHTML = year.value;
-        NewRow.appendChild(newYear);
-
-        //* Creating Output
-        bookList.appendChild(NewRow);
-    }
-})
+    //* Handling Delete Button
+    newRow.addEventListener("click", (e) => {
+      if (e.target.tagName === "SPAN") {
+        newRow.remove();
+      }
+    });
+  }
+});
